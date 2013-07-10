@@ -1,1 +1,27 @@
-<h2>SphinxController#index</h2>
+<h2>Sphinx Documents</h2>
+
+<style type="text/css">
+td {
+  text-align: center;
+}
+</style>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= l(:identifier) %></th>
+      <th><%= l(:link) %></th>
+      <th><%= l(:last_build_time) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @documents.each do |document| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= document.repository.identifier %></td>
+      <td><%= link_to l(:show_document), :action => :show, :identifier => document.repository.identifier %></td>
+      <td><%= document.built_at ? format_time(document.built_at) : '' %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table
+
