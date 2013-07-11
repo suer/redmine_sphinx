@@ -11,6 +11,11 @@ class SphinxDocument
     @identifier = repository.identifier
   end
 
+  def build_root
+    git_dir = repository_path(@project_id, @identifier)
+    git_dir + "/build/html/"
+  end
+
   def built_at
     git_dir = repository_path(@project_id, @identifier)
     if File.exists?(git_dir)
