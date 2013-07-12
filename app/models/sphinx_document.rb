@@ -2,7 +2,12 @@ class SphinxDocument
   attr_reader :repository
 
   def self.sphinx_document?(repository)
-    true # TODO
+    git_bin = Redmine::Scm::Adapters::GitAdapter::GIT_BIN
+    cmd = "cd #{repository.url} && #{git_bin} show master:Makefile"
+    firstline = IO.popen(cmd, 'r+') { |io|
+       io.readlines[0]
+    }
+    (not firstline.nil?) and (firstline.strip == "# Makefile for Sphinx documentation")
   end
 
   def initialize(repository)
