@@ -4,9 +4,9 @@ class SphinxController < ApplicationController
   before_filter :find_project
 
   def index
-    @documents = @project.repositories
-                         .select { |r| SphinxDocument.sphinx_document?(r) }
-                         .map { |r| SphinxDocument.new(r) }
+    @documents = @project.repositories.
+                         select { |r| SphinxDocument.sphinx_document?(r) }.
+                         map { |r| SphinxDocument.new(r) }
   end
 
   def show
