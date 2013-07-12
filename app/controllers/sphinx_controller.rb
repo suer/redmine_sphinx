@@ -12,7 +12,7 @@ class SphinxController < ApplicationController
   def show
     @identifier = params[:identifier]
     document = find_document(@identifier)
-    document.make_html
+    document.make_html if document.need_update?
 
     hash = {:action => 'static', :id => @project.identifier, :path => document.index_html}
     hash[:identifier] = @identifier unless @identifier.blank?

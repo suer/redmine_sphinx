@@ -30,6 +30,14 @@ class SphinxDocument
     end
   end
 
+  def need_update?
+    built_at_time = built_at
+    return true unless built_at_time
+    latest_changeset = @repository.latest_changeset
+    return true if latest_changeset.nil? or latest_changeset.committed_on.nil?
+    latest_changeset.committed_on.to_time > built_at_time
+  end
+
   def make_html
     if repository.scm_name == 'Git'
       git_bin = Redmine::Scm::Adapters::GitAdapter::GIT_BIN
