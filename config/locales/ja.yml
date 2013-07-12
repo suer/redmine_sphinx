@@ -1,0 +1,8 @@
+ja:
+  label_sphinx_documents: "Sphinx ドキュメント"
+  sphinx: "Sphinx"
+  build: "ビルド"
+  link: "リンク"
+  last_build_time: "最終ビルド日時"
+  show_document: "ドキュメントの表示"
+

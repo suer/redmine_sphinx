@@ -1,8 +1,7 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  label_sphinx_documents: "Sphinx Documents"
   sphinx: "Sphinx"
-  identifier: "Identifier"
   build: "Build"
   link: "Link"
   last_build_time: "Last Build Time"
