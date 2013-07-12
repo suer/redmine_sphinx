@@ -13,7 +13,10 @@ class SphinxController < ApplicationController
     @identifier = params[:identifier]
     document = find_document(@identifier)
     document.make_html
-    redirect_to :action => 'static', :id => @project.id, :identifier => @identifier, :path => 'AsakusaSatellite/manual/index.html'
+
+    hash = {:action => 'static', :id => @project.identifier, :path => document.index_html}
+    hash[:identifier] = @identifier unless @identifier.blank?
+    redirect_to hash
   end
 
   def static
@@ -22,11 +25,7 @@ class SphinxController < ApplicationController
     document = find_document(@identifier)
     real_path = document.build_root + path
     real_path += "." + params[:format] unless params[:format].blank?
-    if File.file?(real_path)
-      render :text => open(real_path, "rb").read , :layout => false
-    elsif File.directory?(real_path)
-      # TODO
-    end
+    render :text => open(real_path, "rb").read , :layout => false
   end
 
   private

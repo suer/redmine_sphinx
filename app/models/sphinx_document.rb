@@ -13,7 +13,7 @@ class SphinxDocument
 
   def build_root
     git_dir = repository_path(@project_id, @identifier)
-    git_dir + "/build/html/"
+    git_dir + "/build/" # TODO from Makefile
   end
 
   def built_at
@@ -38,9 +38,21 @@ class SphinxDocument
       IO.popen(cmd, 'r+') { |io| puts io.gets }
 
       # make html
-      cmd = "cd #{git_dir} && make html"
-#      IO.popen(cmd, 'r+') { |io| puts io.gets }
+      make_bin = "make"
+      cmd = "cd #{git_dir} && #{make_bin} html"
       system cmd
+    end
+  end
+
+  def index_html
+    git_dir = repository_path(@project_id, @identifier)
+    manual_dir_line = open(git_dir + "/Makefile") { |f|
+      f.readlines.select { |line| line =~ /^[\s]*MANUALDIR[\s]*=[\s]*.+[\s]*$/ }.first
+    }
+    if manual_dir_line
+      manual_dir_line.split("=")[1].strip + "/index.html"
+    else
+      "html/index.html"
     end
   end
 
